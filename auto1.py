@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from tqdm import tqdm
 from PIL import Image
 import time,csv,pymysql,re
+#连接数据库
 conn = pymysql.connect(
                         host = "127.0.0.1",
                         port = 3306,
@@ -13,8 +14,8 @@ conn = pymysql.connect(
                         charset= 'utf8mb4'
 )
 cursor = conn.cursor()
-sql = 'insert into test(title, info,numb,size,status,address,timing) values(%s,%s,%s,%s,%s,%s,%s)'
-
+sql = 'insert into test(title, info,numb,size,status,address,timing) values(%s,%s,%s,%s,%s,%s,%s)'33
+#定义点击方法
 def cli():
     button = chrome.find_element(By.CSS_SELECTOR,'#tp-bought-root > div.row-mod__row___1aPep.js-actions-row-top > div:nth-child(2) > div > button:nth-child(2)')
     chrome.execute_script('arguments[0].click();', button)
@@ -30,6 +31,7 @@ t = int(input('输入起始查找日期(例：20200102)：'))
 url1 =[]
 flag =True
 number=0
+#筛选日期
 try:
     while flag:
         total = chrome.find_elements(By.CSS_SELECTOR, 'div.index-mod__order-container___1ur4-.js-order-container')
@@ -50,6 +52,7 @@ try:
 finally:
     input()
 print(f'一共收集{len(url1)}个网站')
+#对每一个网站的信息进行提取
 for m in tqdm(url1):
     print(f'第{number}个商品')
     print(m)
